@@ -1,11 +1,16 @@
+using TMPro;
 using UnityEngine;
 
-public class KeyboardTester : MonoBehaviour
+public class LetterContainer : MonoBehaviour
 {
+
+    [Header("Elements")]
+    [SerializeField] private TextMeshPro letter;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        KeyboardKey.onKeyPressed += DebugLetter;
+
     }
 
     // Update is called once per frame
@@ -14,8 +19,8 @@ public class KeyboardTester : MonoBehaviour
 
     }
     
-    private void DebugLetter(char letter)
+    public void Initialize()
     {
-        Debug.Log(letter);
+        letter.text = string.Empty;
     }
 }
