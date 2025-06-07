@@ -1,0 +1,99 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InputManager : MonoBehaviour
+{
+    [Header("Elements")]
+    [SerializeField] private WordContainer[] wordContainers;
+    [SerializeField] private Button tryButton;
+    [SerializeField] private KeyboardColorizer keyboardColorizer;
+
+    [Header("Settings")]
+    private int currentWordContainerIndex;
+    private bool canAddLetter = true;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        Initialize();
+
+        KeyboardKey.onKeyPressed += KeyPressedCallback;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    private void Initialize()
+    {
+        for (int i = 0; i < wordContainers.Length; i++)
+        {
+            wordContainers[i].Initialize();
+        }
+    }
+
+    private void KeyPressedCallback(char letter)
+    {
+        if (!canAddLetter || currentWordContainerIndex >= wordContainers.Length)
+        {
+            return;
+        }
+
+        wordContainers[currentWordContainerIndex].AddLetter(letter);
+
+        if (wordContainers[currentWordContainerIndex].IsComplete)
+        {
+            canAddLetter = false;
+            EnableTryButton();
+
+            //CheckWord();
+            //currentWordContainerIndex++;
+        }
+    }
+
+    public void CheckWord()
+    {
+        string wordToCheck = wordContainers[currentWordContainerIndex].GetWord();
+        string secretWord = WordManager.instance.GetSecretWord();
+
+        wordContainers[currentWordContainerIndex].Colorize(secretWord);
+        keyboardColorizer.Colorize(secretWord, wordToCheck);
+        
+        if (wordToCheck.Equals(secretWord))
+        {
+            Debug.Log("You guessed the word: " + secretWord);
+        }
+        else
+        {
+            Debug.Log("Incorrect word: " + wordToCheck);
+
+            canAddLetter = true;
+            DisableTryButton();
+            currentWordContainerIndex++;
+        }
+    }
+
+    public void BackspacePressedCallback()
+    {
+        bool removedLetter = wordContainers[currentWordContainerIndex].RemoveLetter();
+
+        if (removedLetter)
+        {
+            DisableTryButton();
+        }
+
+        canAddLetter = true;
+    }
+
+    private void EnableTryButton()
+    {
+        tryButton.interactable = true;
+    }
+
+    private void DisableTryButton()
+    {
+        tryButton.interactable = false;
+    }
+}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7247992718259310150}
   - component: {fileID: 1052684701241286486}
   - component: {fileID: 4346373522251496855}
+  - component: {fileID: 6940576841775370231}
   m_Layer: 5
   m_Name: Key
   m_TagString: Untagged
@@ -68,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -5177388603050735206, guid: 8da886c2c6cd4436b823d497cc0bd233, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 3
 --- !u!114 &1052684701241286486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +135,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a1b3a8e12ac48c5a1af1b6c5b56540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyImage: {fileID: 7247992718259310150}
   letterText: {fileID: 4650219480894384119}
+--- !u!114 &6940576841775370231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495314974703636869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -11}
+  m_UseGraphicAlpha: 1
 --- !u!1 &6479709897592437847
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,8 +219,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Q
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b139a75216c9e437685fe1d90047d1e9, type: 2}
+  m_sharedMaterial: {fileID: -851310598843716258, guid: b139a75216c9e437685fe1d90047d1e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -235,7 +252,7 @@ MonoBehaviour:
   m_fontSizeMax: 0
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

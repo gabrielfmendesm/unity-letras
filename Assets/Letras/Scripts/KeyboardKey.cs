@@ -4,8 +4,9 @@ using TMPro;
 using System;
 
 public class KeyboardKey : MonoBehaviour
-{   
+{
     [Header("Elements")]
+    [SerializeField] private Image keyImage;
     [SerializeField] private TextMeshProUGUI letterText;
 
     [Header("Events")]
@@ -26,5 +27,25 @@ public class KeyboardKey : MonoBehaviour
     private void SendKeyPressedEvent()
     {
         onKeyPressed?.Invoke(letterText.text[0]);
+    }
+
+    public char GetLetter()
+    {
+        return letterText.text[0];
+    }
+
+    public void SetValid()
+    {
+        keyImage.color = Color.green;
+    }
+
+    public void SetPotential()
+    {
+        keyImage.color = Color.yellow;
+    }
+    
+    public void SetInvalid()
+    {
+        keyImage.color = Color.gray;
     }
 }
