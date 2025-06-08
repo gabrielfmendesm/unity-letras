@@ -71,6 +71,7 @@ public class HintManager : MonoBehaviour
     {
         if (DataManager.instance.GetCoins() < keyboardHintPrice)
         {
+            GameManager.instance.ShowNoCoins();
             return;
         }
 
@@ -112,6 +113,7 @@ public class HintManager : MonoBehaviour
     {
         if (DataManager.instance.GetCoins() < letterHintPrice)
         {
+            GameManager.instance.ShowNoCoins();
             return;
         }
 

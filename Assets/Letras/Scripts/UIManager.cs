@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CanvasGroup settingsCG;
     [SerializeField] private CanvasGroup adPopup;
     [SerializeField] private CanvasGroup adLock;
+    [SerializeField] private CanvasGroup noCoins;
 
     [Header("Menu Elements")]
     [SerializeField] private TextMeshProUGUI menuCoins;
@@ -34,6 +35,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameScore;
 
     public static float adElapsedTime = 0;
+    public static float noCoinsElapsedTime = 0;
     
     
     
@@ -78,6 +80,8 @@ public class UIManager : MonoBehaviour
                 ShowMenu();
                 HideAdPopup();
                 HideAdLock();
+                HideNoCoins();
+
                 break;
             
             case GameState.AdLock:
@@ -86,6 +90,18 @@ public class UIManager : MonoBehaviour
                 HideGameOver();
                 HideMenu();
                 ShowAdLock();
+                HideAdPopup();
+                HideNoCoins();
+
+                break;
+            
+            case GameState.NoCoins:
+                HideLevelComplete();
+                HideGameOver();
+                HideMenu();
+                ShowGame();
+                ShowNoCoins();
+                HideAdLock();
                 HideAdPopup();
                 break;
             
@@ -96,6 +112,7 @@ public class UIManager : MonoBehaviour
                 ShowMenu();
                 ShowAdPopup();
                 HideAdLock();
+                HideNoCoins();
                 break;
                 
             case GameState.Game:
@@ -105,6 +122,8 @@ public class UIManager : MonoBehaviour
                 ShowGame();
                 HideAdPopup();
                 HideAdLock();
+                HideNoCoins();
+
                 break;
 
             case GameState.LevelComplete:
@@ -114,6 +133,8 @@ public class UIManager : MonoBehaviour
                 ShowLevelComplete();
                 HideAdPopup();
                 HideAdLock();
+                HideNoCoins();
+
                 break;
 
             case GameState.GameOver:
@@ -123,6 +144,8 @@ public class UIManager : MonoBehaviour
                 ShowGameOver();
                 HideAdPopup();
                 HideAdLock();
+                HideNoCoins();
+
                 break;
         }
     }
@@ -138,6 +161,16 @@ public class UIManager : MonoBehaviour
                 DataManager.instance.AddCoins(30);
                 adElapsedTime = 0;
                 GameStateChangedCallback(GameState.Menu);
+            } 
+        }
+        
+        if (noCoinsElapsedTime > 0)
+        {   
+            noCoinsElapsedTime -= Time.deltaTime;
+            if (noCoinsElapsedTime <= 0)
+            {
+                noCoinsElapsedTime = 0;
+                GameStateChangedCallback(GameState.Game);
             } 
         }
     }
@@ -182,6 +215,17 @@ public class UIManager : MonoBehaviour
     {
         adElapsedTime = 30;
         ShowCG(adLock);
+    }
+    
+    private void ShowNoCoins()
+    {
+        noCoinsElapsedTime = 3;
+        ShowCG(noCoins);
+    }
+    
+    private void HideNoCoins()
+    {
+        HideCG(noCoins);
     }
 
     private void ShowGame()

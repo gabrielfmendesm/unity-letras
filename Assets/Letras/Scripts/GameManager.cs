@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public enum GameState { Menu, Game, LevelComplete, GameOver, Idle, AdPopup, AdLock }
+public enum GameState { Menu, Game, LevelComplete, GameOver, Idle, AdPopup, AdLock, NoCoins }
 
 public class GameManager : MonoBehaviour
 {
@@ -62,6 +62,12 @@ public class GameManager : MonoBehaviour
     {
         
         SetGameState(GameState.Menu);
+    }
+    
+    public void ShowNoCoins()
+    {
+        
+        SetGameState(GameState.NoCoins);
     }
 
     
