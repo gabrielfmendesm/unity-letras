@@ -34,7 +34,7 @@ public class LetterContainer : MonoBehaviour
         }
         else
         {
-            this.letter.color = Color.black;
+            this.letter.color = Color.white;
         }
 
         this.letter.text = letter.ToString();
