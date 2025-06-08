@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CanvasGroup levelCompleteCG;
     [SerializeField] private CanvasGroup gameOverCG;
     [SerializeField] private CanvasGroup settingsCG;
+    [SerializeField] private CanvasGroup adPopup;
+    [SerializeField] private CanvasGroup adLock;
 
     [Header("Menu Elements")]
     [SerializeField] private TextMeshProUGUI menuCoins;
@@ -31,7 +33,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameCoins;
     [SerializeField] private TextMeshProUGUI gameScore;
 
-
+    public static float adElapsedTime = 0;
+    
+    
+    
     private void Awake()
     {
         if (instance == null)
@@ -71,13 +76,35 @@ public class UIManager : MonoBehaviour
                 HideLevelComplete();
                 HideGameOver();
                 ShowMenu();
+                HideAdPopup();
+                HideAdLock();
                 break;
-
+            
+            case GameState.AdLock:
+                HideGame();
+                HideLevelComplete();
+                HideGameOver();
+                HideMenu();
+                ShowAdLock();
+                HideAdPopup();
+                break;
+            
+            case GameState.AdPopup:
+                HideGame();
+                HideLevelComplete();
+                HideGameOver();
+                ShowMenu();
+                ShowAdPopup();
+                HideAdLock();
+                break;
+                
             case GameState.Game:
                 HideMenu();
                 HideLevelComplete();
                 HideGameOver();
                 ShowGame();
+                HideAdPopup();
+                HideAdLock();
                 break;
 
             case GameState.LevelComplete:
@@ -85,6 +112,8 @@ public class UIManager : MonoBehaviour
                 HideGame();
                 HideGameOver();
                 ShowLevelComplete();
+                HideAdPopup();
+                HideAdLock();
                 break;
 
             case GameState.GameOver:
@@ -92,6 +121,8 @@ public class UIManager : MonoBehaviour
                 HideGame();
                 HideLevelComplete();
                 ShowGameOver();
+                HideAdPopup();
+                HideAdLock();
                 break;
         }
     }
@@ -99,7 +130,16 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (adElapsedTime > 0)
+        {   
+            adElapsedTime -= Time.deltaTime;
+            if (adElapsedTime <= 0)
+            {
+                DataManager.instance.AddCoins(30);
+                adElapsedTime = 0;
+                GameStateChangedCallback(GameState.Menu);
+            } 
+        }
     }
 
     private void UpdateCoinsTexts()
@@ -121,6 +161,27 @@ public class UIManager : MonoBehaviour
     private void HideMenu()
     {
         HideCG(menuCG);
+    }
+    
+    private void HideAdPopup()
+    {
+        HideCG(adPopup);
+    }
+    
+    private void ShowAdPopup()
+    {
+        ShowCG(adPopup);
+    }
+    
+    private void HideAdLock()
+    {
+        HideCG(adLock);
+    }
+    
+    private void ShowAdLock()
+    {
+        adElapsedTime = 30;
+        ShowCG(adLock);
     }
 
     private void ShowGame()
