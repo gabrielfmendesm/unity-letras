@@ -29,7 +29,9 @@ public class WordContainer : MonoBehaviour
     }
 
     public void Initialize()
-    {
+    {   
+        currentLetterIndex = 0;
+        
         for (int i = 0; i < letterContainers.Length; i++)
         {
             letterContainers[i].Initialize();
@@ -40,6 +42,11 @@ public class WordContainer : MonoBehaviour
     {
         letterContainers[currentLetterIndex].SetLetter(letter);
         currentLetterIndex++;
+    }
+
+    public void AddAsHint(int letterIndex, char letter)
+    {
+        letterContainers[letterIndex].SetLetter(letter, true);
     }
 
     public bool RemoveLetter()

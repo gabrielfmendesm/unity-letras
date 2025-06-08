@@ -1,8 +1,11 @@
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager instance;
+
     [Header("Elements")]
     [SerializeField] private WordContainer[] wordContainers;
     [SerializeField] private Button tryButton;
@@ -12,12 +15,44 @@ public class InputManager : MonoBehaviour
     private int currentWordContainerIndex;
     private bool canAddLetter = true;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Initialize();
 
         KeyboardKey.onKeyPressed += KeyPressedCallback;
+        GameManager.onGameStateChanged += GameStateChangedCallback;
+    }
+
+    private void OnDestroy()
+    {
+        KeyboardKey.onKeyPressed -= KeyPressedCallback;
+        GameManager.onGameStateChanged -= GameStateChangedCallback;
+    }
+
+    private void GameStateChangedCallback(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.Game:
+                Initialize();
+                break;
+
+            case GameState.LevelComplete:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -28,6 +63,10 @@ public class InputManager : MonoBehaviour
 
     private void Initialize()
     {
+        currentWordContainerIndex = 0;
+        canAddLetter = true;
+        DisableTryButton();
+
         for (int i = 0; i < wordContainers.Length; i++)
         {
             wordContainers[i].Initialize();
@@ -47,9 +86,6 @@ public class InputManager : MonoBehaviour
         {
             canAddLetter = false;
             EnableTryButton();
-
-            //CheckWord();
-            //currentWordContainerIndex++;
         }
     }
 
@@ -60,19 +96,44 @@ public class InputManager : MonoBehaviour
 
         wordContainers[currentWordContainerIndex].Colorize(secretWord);
         keyboardColorizer.Colorize(secretWord, wordToCheck);
-        
+
         if (wordToCheck.Equals(secretWord))
         {
-            Debug.Log("You guessed the word: " + secretWord);
+            SetLevelComplete();
         }
         else
         {
-            Debug.Log("Incorrect word: " + wordToCheck);
-
-            canAddLetter = true;
-            DisableTryButton();
+            // Debug.Log("Incorrect word: " + wordToCheck);
             currentWordContainerIndex++;
+            DisableTryButton();
+
+            if (currentWordContainerIndex >= wordContainers.Length)
+            {
+                // Debug.Log("GameOver");
+                DataManager.instance.ResetScore();
+                GameManager.instance.SetGameState(GameState.GameOver);
+            }
+            else
+            {
+                canAddLetter = true;
+                DisableTryButton();
+            }
         }
+    }
+
+    private void SetLevelComplete()
+    {
+        UpdateData();
+
+        GameManager.instance.SetGameState(GameState.LevelComplete);
+    }
+
+    private void UpdateData()
+    {
+        int scoreToAdd = 6 - currentWordContainerIndex;
+
+        DataManager.instance.IncreaseScore(scoreToAdd);
+        DataManager.instance.AddCoins(scoreToAdd * 3);
     }
 
     public void BackspacePressedCallback()
@@ -95,5 +156,10 @@ public class InputManager : MonoBehaviour
     private void DisableTryButton()
     {
         tryButton.interactable = false;
+    }
+    
+    public WordContainer GetCurrentWordContainer()
+    {
+        return wordContainers[currentWordContainerIndex];
     }
 }

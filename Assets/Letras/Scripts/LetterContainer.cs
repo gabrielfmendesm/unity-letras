@@ -26,8 +26,17 @@ public class LetterContainer : MonoBehaviour
         letterCointainer.color = Color.white;
     }
 
-    public void SetLetter(char letter)
-    {
+    public void SetLetter(char letter, bool isHint = false)
+    {   
+        if (isHint)
+        {
+            this.letter.color = Color.gray;
+        }
+        else
+        {
+            this.letter.color = Color.black;
+        }
+
         this.letter.text = letter.ToString();
     }
 

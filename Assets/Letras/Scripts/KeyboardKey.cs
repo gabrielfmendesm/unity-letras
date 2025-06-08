@@ -53,7 +53,7 @@ public class KeyboardKey : MonoBehaviour
     }
 
     public void SetPotential()
-    {   
+    {
         if (validity == Validity.Valid)
         {
             return;
@@ -64,7 +64,7 @@ public class KeyboardKey : MonoBehaviour
     }
 
     public void SetInvalid()
-    {   
+    {
         if (validity == Validity.Valid || validity == Validity.Potential)
         {
             return;
@@ -72,5 +72,10 @@ public class KeyboardKey : MonoBehaviour
 
         keyImage.color = Color.gray;
         validity = Validity.Invalid;
+    }
+    
+    public bool IsUntouched()
+    {
+        return validity == Validity.None;
     }
 }
