@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class DataManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class DataManager : MonoBehaviour
     private int coins;
     private int score;
     private int bestScore;
+
+    [Header("Events")]
+    public static Action onCoinsUpdated;
 
     private void Awake()
     {
@@ -39,6 +43,8 @@ public class DataManager : MonoBehaviour
     {
         coins += amount;
         SaveData();
+
+        onCoinsUpdated?.Invoke();
     }
 
     public void RemoveCoins(int amount)
@@ -49,6 +55,8 @@ public class DataManager : MonoBehaviour
             coins = 0;
         }
         SaveData();
+
+        onCoinsUpdated?.Invoke();
     }
 
     public void IncreaseScore(int amount)

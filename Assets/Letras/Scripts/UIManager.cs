@@ -1,14 +1,20 @@
 using UnityEngine;
 using TMPro;
+using Unity.Android.Gradle.Manifest;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
     [Header("Elements")]
+    [SerializeField] private CanvasGroup menuCG;
     [SerializeField] private CanvasGroup gameCG;
     [SerializeField] private CanvasGroup levelCompleteCG;
     [SerializeField] private CanvasGroup gameOverCG;
+
+    [Header("Menu Elements")]
+    [SerializeField] private TextMeshProUGUI menuCoins;
+    [SerializeField] private TextMeshProUGUI menuBestScore;
 
     [Header("Level Complete Elements")]
     [SerializeField] private TextMeshProUGUI levelCompleteCoins;
@@ -22,8 +28,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverBestScore;
 
     [Header("Game Elements")]
-    [SerializeField] private TextMeshProUGUI gameScore;
     [SerializeField] private TextMeshProUGUI gameCoins;
+    [SerializeField] private TextMeshProUGUI gameScore;
 
 
     private void Awake()
@@ -40,35 +46,49 @@ public class UIManager : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {   
-        ShowGame();
+    {
+        ShowMenu();
+        HideGame();
         HideLevelComplete();
+        HideGameOver();
 
         GameManager.onGameStateChanged += GameStateChangedCallback;
+        DataManager.onCoinsUpdated += UpdateCoinsTexts;
     }
 
     private void OnDestroy()
     {
         GameManager.onGameStateChanged -= GameStateChangedCallback;
+        DataManager.onCoinsUpdated -= UpdateCoinsTexts;
     }
 
     private void GameStateChangedCallback(GameState gameState)
     {
         switch (gameState)
         {
+            case GameState.Menu:
+                HideGame();
+                HideLevelComplete();
+                HideGameOver();
+                ShowMenu();
+                break;
+
             case GameState.Game:
+                HideMenu();
                 HideLevelComplete();
                 HideGameOver();
                 ShowGame();
                 break;
 
             case GameState.LevelComplete:
+                HideMenu();
                 HideGame();
                 HideGameOver();
                 ShowLevelComplete();
                 break;
 
             case GameState.GameOver:
+                HideMenu();
                 HideGame();
                 HideLevelComplete();
                 ShowGameOver();
@@ -82,10 +102,31 @@ public class UIManager : MonoBehaviour
 
     }
 
-    private void ShowGame()
-    {   
-        gameScore.text = DataManager.instance.GetScore().ToString();
+    private void UpdateCoinsTexts()
+    {
+        menuCoins.text = DataManager.instance.GetCoins().ToString();
         gameCoins.text = DataManager.instance.GetCoins().ToString();
+        levelCompleteCoins.text = DataManager.instance.GetCoins().ToString();
+        gameOverCoins.text = DataManager.instance.GetCoins().ToString();
+    }
+    
+    private void ShowMenu()
+    {
+        menuCoins.text = DataManager.instance.GetCoins().ToString();
+        menuBestScore.text = DataManager.instance.GetBestScore().ToString();
+
+        ShowCG(menuCG);
+    }
+
+    private void HideMenu()
+    {
+        HideCG(menuCG);
+    }
+
+    private void ShowGame()
+    {
+        gameCoins.text = DataManager.instance.GetCoins().ToString();
+        gameScore.text = DataManager.instance.GetScore().ToString();
 
         ShowCG(gameCG);
     }
