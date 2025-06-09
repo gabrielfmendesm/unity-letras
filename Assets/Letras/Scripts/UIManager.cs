@@ -70,7 +70,9 @@ public class UIManager : MonoBehaviour
     }
 
     private void GameStateChangedCallback(GameState gameState)
-    {
+    {   
+        noCoinsElapsedTime = 0;
+
         switch (gameState)
         {
             case GameState.Menu:
@@ -83,7 +85,7 @@ public class UIManager : MonoBehaviour
                 HideNoCoins();
 
                 break;
-            
+
             case GameState.AdLock:
                 HideGame();
                 HideLevelComplete();
@@ -94,7 +96,7 @@ public class UIManager : MonoBehaviour
                 HideNoCoins();
 
                 break;
-            
+
             case GameState.NoCoins:
                 HideLevelComplete();
                 HideGameOver();
@@ -104,7 +106,7 @@ public class UIManager : MonoBehaviour
                 HideAdLock();
                 HideAdPopup();
                 break;
-            
+
             case GameState.AdPopup:
                 HideGame();
                 HideLevelComplete();
@@ -114,7 +116,7 @@ public class UIManager : MonoBehaviour
                 HideAdLock();
                 HideNoCoins();
                 break;
-                
+
             case GameState.Game:
                 HideMenu();
                 HideLevelComplete();

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class InputManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class InputManager : MonoBehaviour
     private int currentWordContainerIndex;
     private bool canAddLetter = true;
     private bool shouldReset;
+
+    [Header("Events")]
+    public static Action onLetterAdded;
+    public static Action onLetterRemoved;
 
     private void Awake()
     {
@@ -91,11 +96,15 @@ public class InputManager : MonoBehaviour
 
         wordContainers[currentWordContainerIndex].AddLetter(letter);
 
+        HapticsManager.Vibrate();
+
         if (wordContainers[currentWordContainerIndex].IsComplete)
         {
             canAddLetter = false;
             EnableTryButton();
         }
+
+        onLetterAdded?.Invoke();
     }
 
     public void CheckWord()
@@ -155,6 +164,8 @@ public class InputManager : MonoBehaviour
         }
 
         canAddLetter = true;
+
+        onLetterRemoved?.Invoke();
     }
 
     private void EnableTryButton()

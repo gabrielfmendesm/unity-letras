@@ -28,6 +28,7 @@ Este jogo utiliza recursos de terceiros que foram fundamentais para seu desenvol
 - Lista de palavras da língua portuguesa: base utilizada para montar o dicionário de palavras válidas. Repositório com mais de 320 mil palavras: pythonprobr/palavras (https://github.com/pythonprobr/palavras?utm_source=chatgpt.com)
 - Curso de desenvolvimento de jogos com Unity: diversos conceitos e técnicas aplicadas no jogo foram aprendidos no curso da Udemy, disponível em: Curso na Udemy (https://www.udemy.com/share/107xxI3@dB_41_MFMVSk9nErNQ6GrweTuAt5bJn3Y-HZLqQHchd4_2NRUazCjbBf9iRYmJ9L_Q==/
 )
+- Asset de Haptics Feedback Mobile: https://assetstore.unity.com/packages/tools/integration/haptic-taptic-feedback-engine-for-vibrations-on-ios-android-139512
 
 ## Membros
 - Gabriel Mendes

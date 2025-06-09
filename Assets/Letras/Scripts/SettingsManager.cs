@@ -3,24 +3,15 @@ using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    [Header("Elements")]
     [SerializeField] private Image soundsImage;
     [SerializeField] private Image hapticsImage;
 
-    [Header("Settings")]
     private bool soundsState;
     private bool hapticsState;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         LoadStates();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void SoundsButtonCallback()
@@ -34,22 +25,14 @@ public class SettingsManager : MonoBehaviour
     {
         if (soundsState)
         {
-            EnableSounds();
+            SoundsManager.instance.EnableSounds();
+            soundsImage.color = Color.white;
         }
         else
         {
-            DisableSounds();
+            SoundsManager.instance.DisableSounds();
+            soundsImage.color = Color.gray;
         }
-    }
-
-    private void EnableSounds()
-    {
-        soundsImage.color = Color.white;
-    }
-
-    private void DisableSounds()
-    {
-        soundsImage.color = Color.gray;
     }
 
     public void HapticsButtonCallback()
@@ -62,22 +45,21 @@ public class SettingsManager : MonoBehaviour
     private void UpdateHapticsState()
     {
         if (hapticsState)
-        {
             EnableHaptics();
-        }
         else
-        {
             DisableHaptics();
-        }
     }
 
     private void EnableHaptics()
     {
+        HapticsManager.instance.EnableHaptics();
+        HapticsManager.Vibrate();
         hapticsImage.color = Color.white;
     }
 
     private void DisableHaptics()
     {
+        HapticsManager.instance.DisableHaptics();
         hapticsImage.color = Color.gray;
     }
 
@@ -85,11 +67,10 @@ public class SettingsManager : MonoBehaviour
     {
         soundsState = PlayerPrefs.GetInt("Sounds", 1) == 1;
         hapticsState = PlayerPrefs.GetInt("Haptics", 1) == 1;
-
         UpdateSoundsState();
         UpdateHapticsState();
     }
-    
+
     private void SaveStates()
     {
         PlayerPrefs.SetInt("Sounds", soundsState ? 1 : 0);

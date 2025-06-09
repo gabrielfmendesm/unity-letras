@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9313d3e01c71b2f4bb68f15173eea660
+guid: aca416fce0514b74e88b15069945fd8c
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,11 +8,10 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
+  fontName: Roboto
   fontNames:
-  - Coolvetica
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: c067d4ddf93f47a40bc925d499fe4020, type: 3}
-  - {fileID: 12800000, guid: 0287f7ea5bbe37d4ba42098fb1a125ce, type: 3}
+  - Roboto
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
@@ -21,3 +20,10 @@ TrueTypeFontImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 139512
+  packageName: Haptic(Taptic) Feedback Engine for Vibrations on iOS/Android
+  packageVersion: 1.2.5
+  assetPath: Assets/FatMachines/TapticFeedback/Extras/Roboto-Regular.ttf
+  uploadId: 481879
