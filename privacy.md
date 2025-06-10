@@ -28,8 +28,8 @@ Nenhuma palavra é armazenada em servidor nem associada ao jogador.
 
 ## 5. Anúncios  
 Exibimos **apenas anúncios de vídeo opcionais**.  
-Eles **são mostrados somente** se você clicar no botão “assistir anúncio” (por exemplo, para ganhar dicas ou moedas).  
-Os anúncios são fornecidos por redes de terceiros (ex.: Google AdMob) e estão sujeitos à política de privacidade dessas redes.
+Eles **são mostrados somente** se você clicar no botão “assistir anúncio”.  
+Os anúncios nesta versão ainda não estão totalmente implementados e apenas uma tela preta aparecerá com o tempo do anúncio na tela.
 
 ---
 
